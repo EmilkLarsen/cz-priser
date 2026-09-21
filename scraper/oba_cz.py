@@ -8,6 +8,48 @@ OUT = "data/latest/oba_cz.jsonl"
 
 
 def fetch_url_list(limit=None):
+    """Try common Magento sitemap paths, fallback to homepage discovery."""
+    urls = []
+    seen = set()
+    for sm_url in [f"{BASE}/sitemap.xml", f"{BASE}/media/sitemap.xml",
+                   f"{BASE}/sitemap/sitemap.xml"]:
+        try:
+            xml = get(sm_url)
+        except Exception:
+            continue
+        files = re.findall(r"<loc>([^<]+)</loc>", xml)
+        for f in files:
+            try:
+                xml2 = get(f)
+            except Exception:
+                continue
+            us = re.findall(r"<loc>(https://www\.oba\.cz/[^<]+/p/\d+)</loc>", xml2)
+            for u in us:
+                if u not in seen:
+                    seen.add(u)
+                    urls.append(u)
+            if limit and len(urls) >= limit:
+                break
+        if urls:
+            break
+    if not urls:
+        h = get(f"{BASE}/")
+        cats = re.findall(r'href="(https://www\.oba\.cz/[^"]{10,80})"', h)
+        for cat in cats[:10]:
+            try:
+                ch = get(cat)
+            except Exception:
+                continue
+            us = re.findall(r"(https://www\.oba\.cz/[^\s"<]+/p/\d+)", ch)
+            for u in us:
+                if u not in seen:
+                    seen.add(u)
+                    urls.append(u)
+            if limit and len(urls) >= limit:
+                break
+    return urls[:limit] if limit else urls
+
+def _old_fetch(limit=None):
     idx = get(f"{BASE}/sitemap.xml")
     files = re.findall(r"<loc>([^<]+)</loc>", idx)
     urls = []
