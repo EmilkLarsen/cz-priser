@@ -23,7 +23,8 @@ def fetch_url_list(limit=None):
                 xml2 = get(f)
             except Exception:
                 continue
-            us = re.findall(r"<loc>(https://www\.oba\.cz/[^<]+/p/\d+)</loc>", xml2)
+            us = re.findall(r'https://[^\s"<]+/p/\d+', ch)
+
             for u in us:
                 if u not in seen:
                     seen.add(u)
@@ -40,7 +41,7 @@ def fetch_url_list(limit=None):
                 ch = get(cat)
             except Exception:
                 continue
-            us = re.findall(r"(https://www\.oba\.cz/[^\s"<]+/p/\d+)", ch)
+            us = re.findall(r'https://www\.oba\.cz/[^\s"<]+/p/\d+', ch)
             for u in us:
                 if u not in seen:
                     seen.add(u)
