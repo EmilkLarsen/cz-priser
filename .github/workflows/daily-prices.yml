@@ -41,7 +41,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        chain: [oba_cz]
+        chain: [bauhaus_cz]
     steps:
       - uses: actions/checkout@v4
         with:
