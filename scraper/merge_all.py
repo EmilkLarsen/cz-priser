@@ -13,8 +13,16 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__))))
 from build_comparison import main as build_comparison  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CHAINS = ["oba_cz"]
 LATEST = os.path.join(ROOT, "data", "latest")
+import re as _re
+def _discover_chains():
+    chains = set()
+    if os.path.isdir(LATEST):
+        for fn in os.listdir(LATEST):
+            if fn.endswith(".jsonl") and fn != "prices.jsonl":
+                chains.add(fn[:-len(".jsonl")])
+    return sorted(chains) or ["bauhaus_cz"]
+CHAINS = _discover_chains()
 
 
 def main():
