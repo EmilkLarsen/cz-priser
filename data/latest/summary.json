@@ -1,13 +1,13 @@
 {
  "date": "2026-10-15",
- "total_rows": 94031,
+ "total_rows": 94038,
  "chains": {
   "bauhaus_cz": {
-   "products": 56067,
+   "products": 77001,
    "price_changes": 0,
    "suspicious_changes": 0,
    "expired": 0,
-   "seconds": 18004.4
+   "seconds": 18005.3
   }
  }
 }
