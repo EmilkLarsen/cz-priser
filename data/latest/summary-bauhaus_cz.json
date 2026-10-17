@@ -2,11 +2,11 @@
  "date": "2026-10-16",
  "chains": {
   "bauhaus_cz": {
-   "products": 73261,
+   "products": 93175,
    "price_changes": 0,
    "suspicious_changes": 0,
    "expired": 0,
-   "seconds": 18004.5
+   "seconds": 18003.8
   }
  }
 }
