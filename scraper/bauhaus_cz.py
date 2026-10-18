@@ -43,6 +43,15 @@ def handle(u, html):
     name = (t.group(1).rsplit(" | ", 1)[0].strip() if t else u.rsplit("/", 1)[-1])
     ean = re.search(r'"gtin\d*"\s*:\s*"?(\d{8,14})"?', html)
     skm = re.search(r"-(\d{7,9})$", u)
+    # Magento renders a placeholder price ("1,00 kr.") on out-of-stock
+    # product pages - verified live 2026-10-18 (3/3 OOS pages carried
+    # data-price-amount="1" + schema.org/OutOfStock while the real price
+    # is unset). Record the stock state and drop the placeholder row; a
+    # genuine 1.00 product that is ALSO out of stock is vanishingly rare.
+    oos = "schema.org/OutOfStock" in html
+    in_stock = False if oos else (True if "schema.org/InStock" in html else None)
+    if oos and p == 1.0:
+        return []
     return [{
         "chain": "bauhaus_cz",
         "country": "cz",
@@ -52,7 +61,7 @@ def handle(u, html):
         "name": name,
         "url": u,
         "price": p,
-        "in_stock": None,
+        "in_stock": in_stock,
         "image": img.group(1).strip() if img else None,
     }]
 
