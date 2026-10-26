@@ -3,11 +3,11 @@
  "total_rows": 96184,
  "chains": {
   "bauhaus_cz": {
-   "products": 18341,
+   "products": 35912,
    "price_changes": 0,
    "suspicious_changes": 0,
    "expired": 0,
-   "seconds": 18002.0
+   "seconds": 18002.9
   }
  }
 }
