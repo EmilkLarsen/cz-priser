@@ -1,9 +1,13 @@
 {
  "date": "2026-11-17",
- "total_rows": 96686,
+ "total_rows": 96787,
  "chains": {
   "bauhaus_cz": {
-   "error": "RuntimeError: bauhaus_cz discovery: 0 product urls from sitemap.xml + sitemap-1.xml - blocked, moved, or markup changed; never a clean end-of-chunks signal"
+   "products": 96806,
+   "price_changes": 0,
+   "suspicious_changes": 0,
+   "expired": 0,
+   "seconds": 15090.8
   }
  }
 }
